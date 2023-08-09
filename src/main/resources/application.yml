@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/MicroAuth
+    username: postgres
+    password: 12345
+  application:
+    name: identity-service
+
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        format-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
