@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService(
-    private val userRepository: UserRepository, private val passwordEncoder: BCryptPasswordEncoder
+    private val userRepository: UserRepository,
+    private val passwordEncoder: BCryptPasswordEncoder
 ) {
     fun save(user: User): User {
         user.password = passwordEncoder.encode(user.password)
@@ -21,7 +22,7 @@ class UserService(
 
     fun findByLoginDto(loginDto: LoginDto): User {
         userRepository.findByEmail(loginDto.email)?.let { user ->
-            if (passwordEncoder.matches(loginDto.password,user.password)) return user
+            if (passwordEncoder.matches(loginDto.password, user.password)) return user
         }
         throw RuntimeException("User Not Found")
     }

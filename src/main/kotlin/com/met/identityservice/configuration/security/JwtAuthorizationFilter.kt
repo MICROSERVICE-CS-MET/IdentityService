@@ -15,9 +15,9 @@ import java.io.IOException
 class JwtAuthorizationFilter(
     private val jwtTokenUtil: JwtTokenUtil,
     private val service: UserDetailsService,
-    authManager: AuthenticationManager,
+    authManager: AuthenticationManager
 
-    ) : BasicAuthenticationFilter(authManager) {
+) : BasicAuthenticationFilter(authManager) {
 
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(

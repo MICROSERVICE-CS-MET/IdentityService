@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.jpa") version "1.8.22"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
 group = "com.met"
@@ -32,7 +33,6 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.3")
-
 }
 
 tasks.withType<KotlinCompile> {
