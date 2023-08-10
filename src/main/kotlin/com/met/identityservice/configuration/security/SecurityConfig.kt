@@ -27,15 +27,16 @@ class SecurityConfig(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         val authenticationManager = authManager(http)
-        http.authorizeHttpRequests { it ->
-            it.requestMatchers("/users/**").permitAll().anyRequest().authenticated()
-                .and()
-                .csrf { cs ->
-                    cs.disable()
-                }
-        }.authenticationManager(authenticationManager).sessionManagement { it ->
-            it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        }.addFilter(JwtAuthenticationFilter(jwtToken, authenticationManager))
+        http.csrf { csrf -> csrf.disable() }
+            .authorizeHttpRequests { it ->
+                it.requestMatchers(
+                    "/users/register",
+                    "/users/login",
+                    "/test/**"
+                ).permitAll().anyRequest().authenticated()
+            }.authenticationManager(authenticationManager).sessionManagement { it ->
+                it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            }.addFilter(JwtAuthenticationFilter(jwtToken, authenticationManager))
             .addFilter(JwtAuthorizationFilter(jwtToken, userDetailsService, authenticationManager))
 
         return http.build()

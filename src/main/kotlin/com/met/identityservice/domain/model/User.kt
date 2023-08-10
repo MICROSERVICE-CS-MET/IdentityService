@@ -2,6 +2,8 @@ package com.met.identityservice.domain.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.springframework.security.core.userdetails.UserDetails
@@ -9,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails
 @Table(name = "users")
 @Entity
 open class User(
-    @Id var id: Int,
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Int? = null,
     @Column(name = "full_name")var fullName: String,
     var email: String,
     private var password: String

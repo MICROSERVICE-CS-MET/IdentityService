@@ -2,6 +2,7 @@ package com.met.identityservice.controller
 
 import com.met.identityservice.configuration.security.JwtTokenUtil
 import com.met.identityservice.domain.dto.LoginDto
+import com.met.identityservice.domain.dto.RegisterRequest
 import com.met.identityservice.domain.model.User
 import com.met.identityservice.service.UserService
 import org.springframework.web.bind.annotation.GetMapping
@@ -23,8 +24,8 @@ class UserController(
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody user: User): User {
-        return userService.save(user)
+    fun register(@RequestBody registerRequest: RegisterRequest): User {
+        return userService.save(registerRequest)
     }
 
     @PostMapping("/login")
