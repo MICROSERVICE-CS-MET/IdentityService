@@ -2,6 +2,7 @@ package com.met.identityservice.controller
 
 import com.met.identityservice.configuration.security.JwtTokenUtil
 import com.met.identityservice.domain.dto.LoginDto
+import com.met.identityservice.domain.dto.LoginRequest
 import com.met.identityservice.domain.dto.RegisterRequest
 import com.met.identityservice.domain.model.User
 import com.met.identityservice.service.UserService
@@ -31,6 +32,13 @@ class UserController(
     @PostMapping("/login")
     fun login(@RequestBody user: LoginDto): String {
         val loadedUser = userService.findByLoginDto(user)
+        val token = tokenUtil.generateToken(loadedUser.username)
+        return token
+    }
+
+    @PostMapping("/login2")
+    fun login2(@RequestBody loginRequest: LoginRequest): String{
+        val loadedUser = userService.findByEmail(loginRequest)
         val token = tokenUtil.generateToken(loadedUser.username)
         return token
     }

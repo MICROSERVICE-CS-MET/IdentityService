@@ -1,6 +1,7 @@
 package com.met.identityservice.service
 
 import com.met.identityservice.domain.dto.LoginDto
+import com.met.identityservice.domain.dto.LoginRequest
 import com.met.identityservice.domain.dto.RegisterRequest
 import com.met.identityservice.domain.model.User
 import com.met.identityservice.repository.UserRepository
@@ -23,6 +24,13 @@ class UserService(
 
     fun findAll(): List<User> {
         return userRepository.findAll()
+    }
+
+    fun findByEmail(loginRequest: LoginRequest): User{
+        userRepository.findByEmail(loginRequest.email)?.let{
+            user -> if (passwordEncoder.matches(loginRequest.password, user.password)) return user
+        }
+        throw RuntimeException("User Not Found")
     }
 
     fun findByLoginDto(loginDto: LoginDto): User {

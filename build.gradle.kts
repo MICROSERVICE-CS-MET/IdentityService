@@ -38,7 +38,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
 
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.0.4")
 }
 
 tasks.withType<KotlinCompile> {

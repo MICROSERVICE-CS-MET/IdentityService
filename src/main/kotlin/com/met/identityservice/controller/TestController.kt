@@ -12,12 +12,12 @@ class TestController(
     private val customerServiceClient: CustomerServiceClient
 ) {
     @GetMapping("/all-users")
-    suspend fun getAll(): List<CustomerResponse> {
-        return customerServiceClient.getAll()
+    fun getAll(): List<CustomerResponse> {
+        return customerServiceClient.all()
     }
 
     @GetMapping("/test")
     fun test(): String {
-        return "asd"
+        return customerServiceClient.test()
     }
 }
