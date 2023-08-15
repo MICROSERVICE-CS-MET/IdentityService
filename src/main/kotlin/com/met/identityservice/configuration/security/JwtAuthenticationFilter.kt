@@ -1,7 +1,7 @@
 package com.met.identityservice.configuration.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.met.identityservice.domain.dto.LoginDto
+import com.met.identityservice.client.dto.request.LoginRequest
 import com.met.identityservice.domain.model.User
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -20,7 +20,7 @@ class JwtAuthenticationFilter(
     UsernamePasswordAuthenticationFilter() {
 
     override fun attemptAuthentication(req: HttpServletRequest, response: HttpServletResponse): Authentication {
-        val credentials = ObjectMapper().readValue(req.inputStream, LoginDto::class.java)
+        val credentials = ObjectMapper().readValue(req.inputStream, LoginRequest::class.java)
         val auth = UsernamePasswordAuthenticationToken(
             credentials.email,
             credentials.password,

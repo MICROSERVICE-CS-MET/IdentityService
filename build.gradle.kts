@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.jpa") version "1.8.22"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
+    kotlin("kapt") version "1.8.22"
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
@@ -37,6 +38,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
+
+    implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.0.4")
 }

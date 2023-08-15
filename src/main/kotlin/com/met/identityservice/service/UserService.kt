@@ -1,42 +1,22 @@
 package com.met.identityservice.service
 
-import com.met.identityservice.domain.dto.LoginDto
-import com.met.identityservice.domain.dto.LoginRequest
-import com.met.identityservice.domain.dto.RegisterRequest
-import com.met.identityservice.domain.model.User
-import com.met.identityservice.repository.UserRepository
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import com.met.identityservice.client.dto.request.LoginRequest
+import com.met.identityservice.client.dto.request.RegisterRequest
+import com.met.identityservice.client.dto.response.CustomerResponse
+import com.met.identityservice.client.dto.response.LoginResponse
+import com.met.identityservice.client.service.CustomerServiceClient
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(
-    private val userRepository: UserRepository,
-    private val passwordEncoder: BCryptPasswordEncoder
+    private val customerClient: CustomerServiceClient
 ) {
-    fun save(request: RegisterRequest): User {
-        val user = User(
-            fullName = request.fullName,
-            email = request.email,
-            password = passwordEncoder.encode(request.password)
-        )
-        return userRepository.save(user)
+
+    fun register(request: RegisterRequest): CustomerResponse {
+        return customerClient.register(request)
     }
 
-    fun findAll(): List<User> {
-        return userRepository.findAll()
-    }
-
-    fun findByEmail(loginRequest: LoginRequest): User{
-        userRepository.findByEmail(loginRequest.email)?.let{
-            user -> if (passwordEncoder.matches(loginRequest.password, user.password)) return user
-        }
-        throw RuntimeException("User Not Found")
-    }
-
-    fun findByLoginDto(loginDto: LoginDto): User {
-        userRepository.findByEmail(loginDto.email)?.let { user ->
-            if (passwordEncoder.matches(loginDto.password, user.password)) return user
-        }
-        throw RuntimeException("User Not Found")
+    fun findByLoginRequest(loginRequest: LoginRequest): LoginResponse {
+        return customerClient.login(loginRequest)
     }
 }

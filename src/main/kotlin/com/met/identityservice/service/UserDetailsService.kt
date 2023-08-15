@@ -1,7 +1,7 @@
 package com.met.identityservice.service
 
+import com.met.identityservice.client.service.CustomerServiceClient
 import com.met.identityservice.domain.model.User
-import com.met.identityservice.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -10,10 +10,10 @@ import java.util.*
 
 @Service
 class UserDetailsService(
-    private val repository: UserRepository
+    private val customerServiceClient: CustomerServiceClient
 ) : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = repository.findByEmail(username) ?: throw UsernameNotFoundException("$username not found")
+        val user = customerServiceClient.findByEmail(username) ?: throw UsernameNotFoundException("$username not found")
         return User(
             user.id,
             user.fullName,

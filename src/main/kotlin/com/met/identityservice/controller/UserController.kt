@@ -1,12 +1,13 @@
 package com.met.identityservice.controller
 
+import com.met.identityservice.client.dto.request.LoginRequest
+import com.met.identityservice.client.dto.request.RegisterRequest
+import com.met.identityservice.client.dto.response.CustomerResponse
+import com.met.identityservice.client.service.CustomerServiceClient
 import com.met.identityservice.configuration.security.JwtTokenUtil
-import com.met.identityservice.domain.dto.LoginDto
-import com.met.identityservice.domain.dto.LoginRequest
-import com.met.identityservice.domain.dto.RegisterRequest
-import com.met.identityservice.domain.model.User
 import com.met.identityservice.service.UserService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,31 +17,26 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/users")
 class UserController(
+    private val customerServiceClient: CustomerServiceClient,
     private val userService: UserService,
     private val tokenUtil: JwtTokenUtil
 ) {
-    @GetMapping()
-    fun findAll(): List<User> {
-        return userService.findAll()
+
+    @PostMapping("/login")
+    fun login(@RequestBody loginRequest: LoginRequest): String {
+        val user = userService.findByLoginRequest(loginRequest)
+        val token = tokenUtil.generateToken(user.email)
+        return token
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody registerRequest: RegisterRequest): User {
-        return userService.save(registerRequest)
+    fun register(@RequestBody registerRequest: RegisterRequest): CustomerResponse {
+        return userService.register(registerRequest)
     }
 
-    @PostMapping("/login")
-    fun login(@RequestBody user: LoginDto): String {
-        val loadedUser = userService.findByLoginDto(user)
-        val token = tokenUtil.generateToken(loadedUser.username)
-        return token
-    }
-
-    @PostMapping("/login2")
-    fun login2(@RequestBody loginRequest: LoginRequest): String{
-        val loadedUser = userService.findByEmail(loginRequest)
-        val token = tokenUtil.generateToken(loadedUser.username)
-        return token
+    @GetMapping("/{email}")
+    fun findByEmail(@PathVariable("email") email: String): CustomerResponse? {
+        return customerServiceClient.findByEmail(email)
     }
 
     @GetMapping("/validateToken")

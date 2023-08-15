@@ -5,7 +5,6 @@ spring:
     password: 12345
   application:
     name: identity-service
-
   jpa:
     generate-ddl: true
     properties:

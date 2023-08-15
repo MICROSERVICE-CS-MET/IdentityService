@@ -7,13 +7,14 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.*
 
 @Table(name = "users")
 @Entity
 open class User(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Int? = null,
+    @GeneratedValue(strategy = GenerationType.UUID)
+    val id: UUID? = null,
     @Column(name = "full_name")var fullName: String,
     var email: String,
     private var password: String
