@@ -32,7 +32,7 @@ class SecurityConfig(
                 it.requestMatchers(
                     "/users/register",
                     "/users/login",
-                    "/test/**"
+                    "/users/validate-token"
                 ).permitAll().anyRequest().authenticated()
             }.authenticationManager(authenticationManager).sessionManagement { it ->
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

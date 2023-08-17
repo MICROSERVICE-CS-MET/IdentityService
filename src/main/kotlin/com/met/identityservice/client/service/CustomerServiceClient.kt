@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping
 @FeignClient(value = "customer-service", url = "http://localhost:6060/customers")
 interface CustomerServiceClient {
 
-    @PostMapping("/login")
+    @PostMapping("/validate-user")
     fun login(loginRequest: LoginRequest): LoginResponse
 
     @PostMapping("/register")
     fun register(registerRequest: RegisterRequest): CustomerResponse
 
-    @GetMapping("/findByEmail/{email}")
+    @GetMapping("/find-by-email/{email}")
     fun findByEmail(@PathVariable("email") email: String): CustomerResponse?
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/users")
 class UserController(
-    private val customerServiceClient: CustomerServiceClient,
     private val userService: UserService,
     private val tokenUtil: JwtTokenUtil
 ) {
@@ -34,12 +33,7 @@ class UserController(
         return userService.register(registerRequest)
     }
 
-    @GetMapping("/{email}")
-    fun findByEmail(@PathVariable("email") email: String): CustomerResponse? {
-        return customerServiceClient.findByEmail(email)
-    }
-
-    @GetMapping("/validateToken")
+    @GetMapping("/validate-token")
     fun validateToken(@RequestParam("token")token: String): Boolean {
         return tokenUtil.isTokenValid(token)
     }
