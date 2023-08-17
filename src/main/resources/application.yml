@@ -5,6 +5,8 @@ spring:
     password: 12345
   application:
     name: identity-service
+  banner:
+    location: banner.txt
   jpa:
     generate-ddl: true
     properties:
